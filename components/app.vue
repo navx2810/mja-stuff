@@ -48,13 +48,6 @@ label
 
 <script>
 export default {
-    data: () => ({
-        file: []
-    }),
-    methods: {
-        upload(e) {
-            e.preventDefault()
-        }
-    }
+    
 }
 </script>

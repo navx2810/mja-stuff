@@ -1,22 +1,24 @@
 <template>
     <div>
-        <h2>Blurbs</h2>
+        <h2 class="mb-4">Blurbs</h2>
         <div class="card card-body">
-            <h4>Add A Blurb</h4>
+            <h4 class="mb-3">Add A Blurb</h4>
             <div class="row">
                 <div class="col">
-                    <div class="form-group">
-                        <label>Text</label>
-                        <textarea cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-                    <div v-if="vm.edit.CbId === 0" class="form-group text-right">
-                        <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
-                        <button type="submit" class="btn btn-outline-success">Add</button>
-                    </div>
-                    <div v-if="vm.edit.CbId" class="form-group text-right">
-                        <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
-                        <button type="submit" class="btn btn-outline-success">Save</button>
-                    </div>
+                    <form @submit.prevent="submit">
+                        <div class="form-group">
+                            <label>Text</label>
+                            <textarea v-model="vm.edit.text" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+                        <div v-if="vm.edit.CbId === 0" class="form-group text-right">
+                            <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
+                            <button type="submit" class="btn btn-outline-success">Add</button>
+                        </div>
+                        <div v-if="vm.edit.CbId" class="form-group text-right">
+                            <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-outline-success">Save</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col">
                 </div>

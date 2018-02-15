@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h2>Videos</h2>
+        <h2 class="mb-4">Videos</h2>
         <div class="card card-body">
-            <h4>Add A Video</h4>
+            <h4 class="mb-3">Add A Video</h4>
             <div class="row">
                 <div class="col">
                     <form @submit.prevent="submit()">

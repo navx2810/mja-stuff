@@ -2,6 +2,6 @@ module.exports = {
     dist: '../dist',
     // extractCSS: false,
     devServer: {
-        proxy: "http://kiosk.hawkmountain.mojoactive.local/api"
+        proxy: "http://kiosk.hawkmountain.client.mojoactive.com/api"
     }
 }

@@ -1,22 +1,24 @@
 <template>
     <div>
-        <h2>Ads</h2>
+        <h2 class="mb-4">Ads</h2>
         <div class="card card-body">
-            <h4>Add An Ad</h4>
+            <h4 class="mb-3">Add An Ad</h4>
             <div class="row">
                 <div class="col">
-                    <div class="form-group">
-                        <label>Photo</label>
-                        <b-form-file v-model="file"></b-form-file>
-                    </div>
-                    <div v-if="vm.edit.CbId === 0" class="form-group text-right">
-                        <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
-                        <button type="submit" class="btn btn-outline-success">Add</button>
-                    </div>
-                    <div v-if="vm.edit.CbId" class="form-group text-right">
-                        <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
-                        <button type="submit" class="btn btn-outline-success">Save</button>
-                    </div>
+                    <form @submit.prevent="submit">
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <b-form-file v-model="vm.edit.image"></b-form-file>
+                        </div>
+                        <div v-if="vm.edit.CbId === 0" class="form-group text-right">
+                            <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
+                            <button type="submit" class="btn btn-outline-success">Add</button>
+                        </div>
+                        <div v-if="vm.edit.CbId" class="form-group text-right">
+                            <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-outline-success">Save</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col">
                 </div>
@@ -30,7 +32,7 @@
                         <img :src="res.image" class="img-fluid">
                     </div>
                     <div class="card-footer text-right">
-                        <button @click="edit(res)" class="btn btn-outline-primary">Edit</button>
+                        <!-- <button @click="edit(res)" class="btn btn-outline-primary">Edit</button> -->
                         <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
                     </div>
                 </div>
