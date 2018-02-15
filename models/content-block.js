@@ -1,18 +1,22 @@
+import { v4 } from "uuid"
+
 export default class {
-    cbId = 0
-    cId = null
-    cbSortOrder = null
-    cbHeadline = null
-    cbCopy = null
-    cbPhoto = null
-    cbPhotoCaption = null
-    cbPhotoAltText = null
-    cbPhotoAlign = null
-    cbPhotoMetadata = null
-    cbLink = null
-    cbLinkText = null
-    cbLinkTarget = null
-    cbFile = null
-    cbFileText = null
-    cbMetaData = null
+    CbId = 0
+    CId = null
+    CbSortOrder = 0
+    CbHeadline = null
+    CbCopy = null
+    CbPhoto = null
+    CbPhotoCaption = null
+    CbPhotoAltText = null
+    CbPhotoAlign = null
+    CbPhotoMetadata = null
+    CbLink = null
+    CbLinkText = null
+    CbLinkTarget = null
+    CbFile = null
+    CbFileText = null
+    CbMetaData = null
+
+    get id() { return this.CbId ? this.CbId : v4() }
 }

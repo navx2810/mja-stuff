@@ -10,3 +10,7 @@ Blurb ->
     cbCopy : Text Input
 
 Maybe for organization, there will be three pieces of content: One for Videos, one for blurbs, one for ad carousel.
+
+1569 -> Video CId
+1570 -> Blurb CId
+1572 -> Ad CId
