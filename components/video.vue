@@ -41,14 +41,14 @@
         </div>
         <div v-if="loading" class="mt-4 text-center"><h5>Loading. . .</h5></div>
         <div class="row mt-4">
-            <div class="col-4" v-for="vid in sorted" :key="vid.id">
+            <div class="col-4" v-for="res in sorted" :key="res.id">
                 <div class="card my-3">
                     <div class="card-body">
-                        <img :src="vid.image" :alt="vid.title" class="img-fluid">
+                        <img :src="res.image" :alt="res.title" class="img-fluid">
                     </div>
                     <div class="card-footer text-right">
-                        <button @click="edit(vid)" class="btn btn-outline-primary">Edit</button>
-                        <button @click="vm.remove(vid)" class="btn btn-outline-danger">Delete</button>
+                        <button @click="edit(res)" class="btn btn-outline-primary">Edit</button>
+                        <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ export default class extends Vue {
 
     get vm() { return data.videos }
 
-    get sorted() { return data.videos.list.sort((a,b) => a.sort - b.sort) }
+    get sorted() { return this.vm.list.sort((a,b) => a.sort - b.sort) }
 
     async created() {
         this.loading = true
@@ -94,10 +94,10 @@ export default class extends Vue {
         this.$refs.fileinput.reset();
     }
 
-    edit(video) {
+    edit(res) {
         this.vm.image = null
         this.$refs.fileinput.reset();
-        this.vm.edit = video
+        this.vm.edit = res
     }
 }
 </script>

@@ -26,12 +26,57 @@ export default new class {
                 await request.delete(res)
                 this.list.splice(this.list.indexOf(res))
             }
-            // todo: make the request to remove it.
-            // todo: check if successful
-            // todo: if so, slice the video from the list
-            // todo: if not, post the error.
         },
         reset() { this.edit = new video(); this.image = null }
+    }
+
+    blurbs = {
+        list: [],
+        edit: new blurb(),
+        async add() {
+            // const [image] = await request.uploadImage(this.image, this.edit.title, "blurbs")
+            if(this.edit.CbId) {
+                const res = await request.put(this.edit)
+            } else {
+                // const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                // this.edit.sort = last.sort+1
+                const res = await request.post(this.edit)
+                this.list.push(new blurb(res))
+            }
+            this.reset()
+        },
+        async remove(res) {
+            if(confirm(`Are you sure you want to delete this content?`)) {
+                await request.delete(res)
+                this.list.splice(this.list.indexOf(res))
+            }
+        },
+        reset() { this.edit = new blurb(); }
+    }
+
+    ads = {
+        list: [],
+        edit: new ad(),
+        image: null,
+        async add() {
+            // const [image] = await request.uploadImage(this.image, this.edit.title, "ads")
+            if(this.edit.CbId) {
+                const res = await request.put(this.edit)
+            } else {
+                const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                this.edit.sort = last.sort+1
+                const res = await request.post(this.edit)
+                this.list.push(new ad(res))
+            }
+            this.reset()
+        },
+        async remove(res) {
+            if(confirm(`Are you sure you want to delete this content?`)) {
+                await request.delete(res)
+                this.list.splice(this.list.indexOf(res))
+            }
+        },
+        reset() { this.edit = new ad(); this.image = null }
     }
 
 
