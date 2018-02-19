@@ -10,11 +10,27 @@ import Blurb from "./components/blurb"
 import Ad from "./components/ad"
 
 const router = new VueRouter({
-    routes: [
-        { path: '/videos', component: Video },
-        { path: '/blurbs', component: Blurb },
-        { path: '/ads', component: Ad },
-    ]
+    routes: [{
+        path: '/',
+        component: App,
+        children: [{
+                path: 'videos',
+                component: Video
+            },
+            {
+                path: 'blurbs',
+                component: Blurb
+            },
+            {
+                path: 'ads',
+                component: Ad
+            },
+            {
+                path: '*',
+                redirect: 'videos'
+            }
+        ]
+    }, ]
 })
 
 Vue.use(BootstrapVue)
@@ -24,5 +40,5 @@ new Vue({
     router,
     data,
     el: "#app",
-    render: h => h(App)
+    render: h => <router-view></router-view>
 })

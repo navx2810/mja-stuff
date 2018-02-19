@@ -8,7 +8,7 @@
                     <form @submit.prevent="submit">
                         <div class="form-group">
                             <label>Photo</label>
-                            <b-form-file v-model="vm.edit.image"></b-form-file>
+                            <b-form-file v-model="vm.image"></b-form-file>
                         </div>
                         <div v-if="vm.edit.CbId === 0" class="form-group text-right">
                             <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>

@@ -37,9 +37,9 @@ export default new class {
     
     async uploadImage(image, name, folder) {
         const fd = new FormData()
-        fd.append('file', image, name)
-        const res = await http.post(`/image/${folder}`, fd)
-        return res
+        fd.append('file', image, name ? name : image.name)
+        const res = await http.post(`/file`, fd)
+        return res.data
     }
 
     async post(cb) {

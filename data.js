@@ -10,7 +10,8 @@ export default new class {
         edit: new video(),
         image: null,
         async add() {
-            // const [image] = await request.uploadImage(this.image, this.edit.title, "videos")
+            const { link } = await request.uploadImage(this.image, this.edit.title, "videos")
+            this.edit.image = link
             if(this.edit.CbId) {
                 const res = await request.put(this.edit)
             } else {
@@ -34,7 +35,7 @@ export default new class {
         list: [],
         edit: new blurb(),
         async add() {
-            // const [image] = await request.uploadImage(this.image, this.edit.title, "blurbs")
+            // const { link } = await request.uploadImage(this.image, this.edit.title, "blurbs")
             if(this.edit.CbId) {
                 const res = await request.put(this.edit)
             } else {
@@ -59,7 +60,8 @@ export default new class {
         edit: new ad(),
         image: null,
         async add() {
-            // const [image] = await request.uploadImage(this.image, this.edit.title, "ads")
+            const { link } = await request.uploadImage(this.image, this.edit.title, "ads")
+            this.edit.image = link
             if(this.edit.CbId) {
                 const res = await request.put(this.edit)
             } else {
