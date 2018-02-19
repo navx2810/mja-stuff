@@ -10,17 +10,26 @@ export default new class {
         edit: new video(),
         image: null,
         async add() {
-            const { link } = await request.uploadImage(this.image, this.edit.title, "videos")
-            this.edit.image = link
-            if(this.edit.CbId) {
-                const res = await request.put(this.edit)
-            } else {
-                const [last] = this.list.sort((a,b) => b.sort - a.sort)
-                this.edit.sort = last.sort+1
-                const res = await request.post(this.edit)
-                this.list.push(new video(res))
+            try {
+                const { link } = await request.uploadImage(this.image)
+                this.edit.image = link
+            } catch (e) {
+                throw "Image failed to save."
             }
-            this.reset()
+
+            try {
+                if(this.edit.CbId) {
+                    const res = await request.put(this.edit)
+                } else {
+                    const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                    this.edit.sort = last.sort+1
+                    const res = await request.post(this.edit)
+                    this.list.push(new video(res))
+                }
+                this.reset()
+            } catch(e) {
+                throw "Content has failed to save."
+            }
         },
         async remove(res) {
             if(confirm(`Are you sure you want to delete this content?`)) {
@@ -35,16 +44,26 @@ export default new class {
         list: [],
         edit: new blurb(),
         async add() {
-            // const { link } = await request.uploadImage(this.image, this.edit.title, "blurbs")
-            if(this.edit.CbId) {
-                const res = await request.put(this.edit)
-            } else {
-                const [last] = this.list.sort((a,b) => b.sort - a.sort)
-                this.edit.sort = last.sort+1
-                const res = await request.post(this.edit)
-                this.list.push(new blurb(res))
+            // try {
+            //     const { link } = await request.uploadImage(this.image)
+            //     this.edit.image = link
+            // } catch (e) {
+            //     throw "Image failed to save."
+            // }
+
+            try {
+                if(this.edit.CbId) {
+                    const res = await request.put(this.edit)
+                } else {
+                    const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                    this.edit.sort = last.sort+1
+                    const res = await request.post(this.edit)
+                    this.list.push(new blurb(res))
+                }
+                this.reset()
+            } catch(e) {
+                throw "Content has failed to save."
             }
-            this.reset()
         },
         async remove(res) {
             if(confirm(`Are you sure you want to delete this content?`)) {
@@ -60,17 +79,26 @@ export default new class {
         edit: new ad(),
         image: null,
         async add() {
-            const { link } = await request.uploadImage(this.image, this.edit.title, "ads")
-            this.edit.image = link
-            if(this.edit.CbId) {
-                const res = await request.put(this.edit)
-            } else {
-                const [last] = this.list.sort((a,b) => b.sort - a.sort)
-                this.edit.sort = last.sort+1
-                const res = await request.post(this.edit)
-                this.list.push(new ad(res))
+            try {
+                const { link } = await request.uploadImage(this.image)
+                this.edit.image = link
+            } catch (e) {
+                throw "Image failed to save."
             }
-            this.reset()
+
+            try {
+                if(this.edit.CbId) {
+                    const res = await request.put(this.edit)
+                } else {
+                    const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                    this.edit.sort = last.sort+1
+                    const res = await request.post(this.edit)
+                    this.list.push(new ad(res))
+                }
+                this.reset()
+            } catch(e) {
+                throw "Content has failed to save."
+            }
         },
         async remove(res) {
             if(confirm(`Are you sure you want to delete this content?`)) {

@@ -35,9 +35,9 @@ export default new class {
         return data.ads.list = res.data.map(it => new ad(it))
     }
     
-    async uploadImage(image, name, folder) {
+    async uploadImage(image) {
         const fd = new FormData()
-        fd.append('file', image, name ? name : image.name)
+        fd.append('file', image)
         const res = await http.post(`/file`, fd)
         return res.data
     }

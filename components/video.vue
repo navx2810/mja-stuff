@@ -101,12 +101,17 @@ export default class extends Vue {
         this.$refs.addModal.hide()
     }
 
-    submit() {
+    async submit() {
         this.errors = []
         // todo: validate form input.
         if(!this.errors.length) {
-            this.vm.add()
-            this.hideModal()
+            try {
+                await this.vm.add()
+                this.hideModal()
+            }
+            catch(e) {
+                this.errors = this.errors.concat(e)
+            }
         }
     }
 
