@@ -1,60 +1,55 @@
 <template>
-    <div>
-        <h2 class="mb-4">Ads</h2>
-        <div class="card card-body">
-            <h4 class="mb-3">Add An Ad</h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <form @submit.prevent="submit">
-                        <div class="form-group">
-                            <label>Photo</label>
-                            <b-form-file v-model="vm.image"></b-form-file>
+<div>
+    <div class="flex between center mb-4">
+        <h2>Ads</h2>
+        <button @click="showModal" class="btn btn-outline-success">Add an Ad</button>
+    </div>
+    <div v-if="loading" class="mt-4 text-center">
+        <h5>Loading. . .</h5>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="list-group">
+                <draggable :options="{ handle: '.handle'}" v-model="sorted" @end="dropped">
+                    <div class="list-group-item" v-for="res in sorted" :key="res.id">
+                        <h5>
+                            <i class="handle fas fa-bars"></i>
+                        </h5>
+                        <div>
+                            <img :src="res.image" :alt="res.title" class="img-fluid">
                         </div>
-                        <div v-if="vm.edit.CbId === 0" class="form-group text-right">
-                            <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
-                            <button type="submit" class="btn btn-outline-success">Add</button>
+                        <div class="text-right">
+                            <!-- <button @click="edit(res)" class="btn btn-outline-primary">Edit</button> -->
+                            <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
                         </div>
-                        <div v-if="vm.edit.CbId" class="form-group text-right">
-                            <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
-                            <button type="submit" class="btn btn-outline-success">Save</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
-        </div>
-        <div v-if="loading" class="mt-4 text-center"><h5>Loading. . .</h5></div>
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="list-group">
-                    <draggable :options="{ handle: '.handle'}" v-model="sorted" @end="dropped">
-                        <div class="list-group-item" v-for="res in sorted" :key="res.id">
-                            <h5><i class="handle fas fa-bars"></i></h5>
-                            <div>
-                                <img :src="res.image" :alt="res.title" class="img-fluid">
-                            </div>
-                            <div class="text-right">
-                                <button @click="edit(res)" class="btn btn-outline-primary">Edit</button>
-                                <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
-                            </div>
-                        </div>
-                    </draggable>
-                </div>
-            </div>
-            <!-- <div class="col-6" v-for="res in sorted" :key="res.id">
-                <div class="card my-3">
-                    <div class="card-body">
-                        <img :src="res.image" class="img-fluid">
                     </div>
-                    <div class="card-footer text-right">
-                  
-                        <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
-                    </div>
-                </div>
-            </div> -->
+                </draggable>
+            </div>
         </div>
     </div>
+    <b-modal centered ref="addModal" hide-footer title="Add a Video">
+        <div class="row">
+            <div class="col-12">
+            </div>
+            <div class="col-12">
+                <form @submit.prevent="submit">
+                    <div class="form-group">
+                        <label>Photo</label>
+                        <b-form-file v-model="vm.image"></b-form-file>
+                    </div>
+                    <div v-if="vm.edit.CbId === 0" class="form-group text-right">
+                        <button type="button" @click="reset()" class="btn btn-outline-danger">Reset</button>
+                        <button type="submit" class="btn btn-outline-success">Add</button>
+                    </div>
+                    <div v-if="vm.edit.CbId" class="form-group text-right">
+                        <button type="button" @click="reset()" class="btn btn-outline-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-outline-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </b-modal>
+</div>
 </template>
 
 <script>
@@ -81,11 +76,19 @@ export default class extends Vue {
         this.loading = false
     }
 
+    showModal() {
+        this.$refs.addModal.show()
+    }
+    hideModal() {
+        this.$refs.addModal.hide()
+    }
+
     submit() {
         this.errors = []
         // todo: validate form input.
         if(!this.errors.length) {
             this.vm.add()
+            this.hideModal()
         }
     }
 
@@ -100,6 +103,7 @@ export default class extends Vue {
     }
 
     async reset() {
+        this.hideModal()
         this.vm.reset()
         this.loading = true
         await request.getAds()
@@ -111,6 +115,7 @@ export default class extends Vue {
         this.vm.image = null
         this.$refs.fileinput.reset();
         this.vm.edit = res
+        this.showModal()
     }
 }
 </script>
