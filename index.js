@@ -9,6 +9,8 @@ import Video from "./components/video"
 import Blurb from "./components/blurb"
 import Ad from "./components/ad"
 
+import "./styles/css/fontawesome-all.min.css"
+
 const router = new VueRouter({
     routes: [{
         path: '/',

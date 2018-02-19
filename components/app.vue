@@ -29,6 +29,9 @@
 
 <style lang="stylus">
 
+.handle
+    cursor pointer
+
 $time = 213ms
 
 .fade-enter-active, .fade-leave-active

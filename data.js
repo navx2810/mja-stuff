@@ -39,8 +39,8 @@ export default new class {
             if(this.edit.CbId) {
                 const res = await request.put(this.edit)
             } else {
-                // const [last] = this.list.sort((a,b) => b.sort - a.sort)
-                // this.edit.sort = last.sort+1
+                const [last] = this.list.sort((a,b) => b.sort - a.sort)
+                this.edit.sort = last.sort+1
                 const res = await request.post(this.edit)
                 this.list.push(new blurb(res))
             }

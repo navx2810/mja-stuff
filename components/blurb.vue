@@ -4,7 +4,7 @@
         <div class="card card-body">
             <h4 class="mb-3">Add A Blurb</h4>
             <div class="row">
-                <div class="col">
+                <div class="col-md-6">
                     <form @submit.prevent="submit">
                         <div class="form-group">
                             <label>Text</label>
@@ -20,13 +20,24 @@
                         </div>
                     </form>
                 </div>
-                <div class="col">
+                <div class="col-md-6">
                 </div>
             </div>
         </div>
         <div v-if="loading" class="mt-4 text-center"><h5>Loading. . .</h5></div>
         <div class="row mt-4">
-            <div class="col-12" v-for="res in sorted" :key="res.id">
+            <div class="col-12">
+                <draggable :options="{ handle: '.handle'}" v-model="sorted" @end="dropped">
+                    <div class="list-group-item" v-for="res in sorted" :key="res.id">
+                        <p><i class="handle fas fa-bars"></i> {{res.text}}</p>
+                        <div class="text-right">
+                            <button @click="edit(res)" class="btn btn-outline-primary">Edit</button>
+                            <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+                </draggable>
+            </div>
+            <!-- <div class="col-12" v-for="res in sorted" :key="res.id">
                 <div class="card my-3">
                     <div class="card-body">
                         <p v-html="res.text"></p>
@@ -36,7 +47,7 @@
                         <button @click="vm.remove(res)" class="btn btn-outline-danger">Delete</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -47,7 +58,9 @@ import Component from "vue-class-component"
 import request from "../request"
 import data from "../data"
 
-@Component({ name: "Blurbs" })
+import draggable from "vuedraggable"
+
+@Component({ name: "Blurbs", components: { draggable } })
 export default class extends Vue {
 
     loading = false
@@ -56,6 +69,16 @@ export default class extends Vue {
     get vm() { return data.blurbs }
 
     get sorted() { return this.vm.list.sort((a,b) => a.sort - b.sort) }
+
+    async dropped({ oldIndex, newIndex }) {
+        const cur = this.sorted[oldIndex]
+        const pos = this.sorted[newIndex]
+        const newSort = pos.sort
+        pos.sort = cur.sort
+        cur.sort = newSort
+
+        await Promise.all( request.put(pos), request.put(cur) )
+    }
 
     async created() {
         this.loading = true
